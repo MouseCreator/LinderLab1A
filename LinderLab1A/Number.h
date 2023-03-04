@@ -20,6 +20,31 @@ protected:
 			digits.push_back(ch - '0');
 		}
 	}
+	/**
+	* Substracts max of n1 and n2 from min of n1 and n2
+	*/
+	PositiveNumber substractFrom(PositiveNumber n1, PositiveNumber n2) const {
+		std::vector<int>* bigger = (n1 > n2) ? &n1.digits : &n2.digits;
+		std::vector<int>* smaller = (n1 <= n2) ? &n1.digits : &n2.digits;
+		bool substractOne = false;
+
+		std::size_t minSize = smaller->size();
+		PositiveNumber dif = PositiveNumber();
+		int i = 0;
+		for (; i < minSize; i++) {
+			int v = bigger->at(i) - smaller->at(i) - substractOne;
+			substractOne = v < 0;
+			dif.digits.push_back(v + vectorP * substractOne);
+		}
+		while (i < digits.size()) {
+			int v = bigger->at(i) - smaller->at(i) - substractOne;
+			substractOne = v < 0;
+			dif.digits.push_back(v + vectorP * substractOne);
+			i++;
+		}
+
+		return dif;
+	}
 
 public:
 	PositiveNumber() {
@@ -105,7 +130,7 @@ public:
 		return true;
 	}
 	/**
-	* Adds to positive numbers
+	* Adds two positive numbers
 	*/
 	PositiveNumber addTo(PositiveNumber other) const{
 		std::size_t minSize = std::min(digits.size(), other.digits.size());
@@ -141,28 +166,7 @@ public:
 	PositiveNumber substractFrom(PositiveNumber other) const {
 		return substractFrom(*this, other);
 	}
-	PositiveNumber substractFrom(PositiveNumber n1, PositiveNumber n2) const {
-		std::vector<int>* bigger = (n1 > n2) ? &n1.digits : &n2.digits;
-		std::vector<int>* smaller = (n1 <= n2) ? &n1.digits : &n2.digits;
-		bool substractOne = false;
-
-		std::size_t minSize = smaller->size();
-		PositiveNumber dif = PositiveNumber();
-		int i = 0;
-		for (; i < minSize; i++) {
-			int v = bigger->at(i) - smaller->at(i) - substractOne;
-			substractOne = v < 0;
-			dif.digits.push_back(v + vectorP * substractOne);
-		}
-		while (i < digits.size()) {
-			int v = bigger->at(i) - smaller->at(i) - substractOne;
-			substractOne = v < 0;
-			dif.digits.push_back(v + vectorP * substractOne);
-			i++;
-		}
-
-		return dif;
-	}
+	
 
 	std::string toString() {
 		std::string result = "";
