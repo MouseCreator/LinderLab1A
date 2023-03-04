@@ -15,8 +15,9 @@ protected:
 	void parseDigits(std::string str) {
 		digits.clear();
 		std::size_t size = str.size();
-		for (int i = size - 1; i >= 0; i--) {
-			digits.push_back(str[i] - '0');
+		reverse(str.begin(), str.end());
+		for(char ch : str) {
+			digits.push_back(ch - '0');
 		}
 	}
 
@@ -30,8 +31,13 @@ public:
 		return digits[i];
 	}
 
-	Number addTo(Number other) {
-		int minSize = std::min(digits.size(), other.digits.size());
+
+	Number operator+(const Number& n) const {
+		return addTo(n);
+	}
+
+	Number addTo(Number other) const{
+		std::size_t minSize = std::min(digits.size(), other.digits.size());
 		bool addOne = false;
 		Number sum = Number();
 		int i = 0;
@@ -64,9 +70,10 @@ public:
 		std::string result = "";
 		if (digits.empty())
 			return "0";
-		for (int i = digits.size() - 1; i >= 0; i--) {
-			result += (digits[i] + '0');
+		for (int i : digits) {
+			result += (i + '0');
 		}
+		reverse(result.begin(), result.end());
 		return result;
 	}
 };
