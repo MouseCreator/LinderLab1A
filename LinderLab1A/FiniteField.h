@@ -1,7 +1,8 @@
 #pragma once
+#include "Number.h"
 class FiniteField
 {
 private:
-	int p;
+	PositiveNumber p;
 };
 

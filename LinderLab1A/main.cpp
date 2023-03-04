@@ -1,9 +1,10 @@
 #include "Number.h"
 
 int main() {
-	Number a = Number("1234");
-	Number b = Number("9925");
-	Number c = a.addTo(b);
+	PositiveNumber a = PositiveNumber("1234");
+	PositiveNumber b = PositiveNumber("9925");
+	PositiveNumber c = a + b;
+	PositiveNumber d = b - a;
 	
-	std::cout << c.toString() << std::endl;
+	std::cout << d.toString() << std::endl;
 }

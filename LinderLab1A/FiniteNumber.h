@@ -1,7 +1,7 @@
 #pragma once
 #include "Number.h"
 
-class FiniteNumeber : Number {
+class FiniteNumeber : PositiveNumber {
 
 };
 
