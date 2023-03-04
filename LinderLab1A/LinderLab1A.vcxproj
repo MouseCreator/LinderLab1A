@@ -128,8 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Field.h" />
+    <ClInclude Include="FiniteField.h" />
     <ClInclude Include="FiniteNumber.h" />
     <ClInclude Include="Number.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FiniteField.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -24,5 +24,13 @@
     <ClInclude Include="FiniteNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FiniteField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FiniteField.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
