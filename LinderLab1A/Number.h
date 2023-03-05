@@ -54,6 +54,31 @@ protected:
 		return dif.trim();
 	}
 
+	/**
+	* Multiplies number by other using primitive algorithm
+	*/
+	PositiveNumber simpleMultiplication(PositiveNumber other) {
+		PositiveNumber product;
+		int offsite = 0;
+		for (int i : digits) {
+			PositiveNumber term;
+			int toAdd = 0;
+			for (int j = 0; j < offsite; j++)
+				term.digits.push_back(0);
+			for (int j : other.digits) {
+				int v = i * j + toAdd;
+				term.digits.push_back(v % vectorP);
+				toAdd = v / vectorP;
+			}
+			if (toAdd != 0) {
+				term.digits.push_back(toAdd);
+			}
+			product.addTo(term);
+			offsite++;
+		}
+		return product;
+	}
+
 public:
 	PositiveNumber() {
 	}
@@ -79,8 +104,17 @@ public:
 	PositiveNumber operator*(const PositiveNumber& n) {
 		return simpleMultiplication(n);
 	}
-	PositiveNumber operator-(const PositiveNumber& n) const {
-		return substractFrom(n);
+	PositiveNumber operator*=(const PositiveNumber& n) {
+		this->multiplyBy(n);
+		return *this;
+	}
+	friend PositiveNumber operator-(PositiveNumber left, const PositiveNumber& n) {
+		left.substractFrom(n);
+		return left;
+	}
+	PositiveNumber& operator-=(const PositiveNumber& n) {
+		this->substractFrom(n);
+		return *this;
 	}
 	bool operator==(PositiveNumber& n) const {
 		return equals(n);
@@ -207,7 +241,9 @@ public:
 		return substractFrom(*this, other);
 	}
 	
-
+	/**
+	* Shows number as printable string
+	*/
 	std::string toString() {
 		std::string result = "";
 		if (digits.empty())
@@ -219,25 +255,11 @@ public:
 		return result;
 	}
 
-	PositiveNumber simpleMultiplication(PositiveNumber other) {
-		PositiveNumber product;
-		int offsite = 0;
-		for (int i : digits) {
-			PositiveNumber term;
-			int toAdd = 0;
-			for (int j = 0; j < offsite; j++)
-				term.digits.push_back(0);
-			for (int j : other.digits) {
-				int v = i * j + toAdd;
-				term.digits.push_back(v % vectorP);
-				toAdd = v / vectorP;
-			}
-			if (toAdd != 0) {
-				term.digits.push_back(toAdd);
-			}
-			product.addTo(term);
-			offsite++;
-		}
-		return product;
+	/**
+	* Multiplies number by other using primitive algorithm
+	*/
+	void multiplyBy(PositiveNumber other) {
+		this->digits = simpleMultiplication(other).digits;
 	}
+	
 };
