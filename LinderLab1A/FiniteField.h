@@ -1,5 +1,5 @@
 #pragma once
-#include "Number.h"
+#include "PositiveNumber.h"
 class FiniteField
 {
 private:

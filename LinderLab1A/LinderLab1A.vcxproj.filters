@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Number.h">
+    <ClInclude Include="PositiveNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Field.h">
@@ -25,6 +25,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FiniteField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SignedNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

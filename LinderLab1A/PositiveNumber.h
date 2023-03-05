@@ -9,7 +9,6 @@
 */
 class PositiveNumber {
 private:
-	std::vector<int> digits; //digits as decimal numbers
 	static const int vectorP = 10;
 
 
@@ -21,13 +20,16 @@ private:
 	}
 
 protected:
-	void parseDigits(std::string str) {
-		digits.clear();
+	std::vector<int> digits; //digits as decimal numbers
+
+	std::vector<int> parseDigits(std::string str) {
+		std::vector<int> digits;
 		std::size_t size = str.size();
 		reverse(str.begin(), str.end());
 		for(char ch : str) {
 			digits.push_back(ch - '0');
 		}
+		return digits;
 	}
 	/**
 	* Substracts max of n1 and n2 from min of n1 and n2
@@ -83,7 +85,7 @@ public:
 	PositiveNumber() {
 	}
 	PositiveNumber(std::string digitsString) {
-		parseDigits(digitsString);
+		this->digits = parseDigits(digitsString);
 	}
 	int& operator[](int i) {
 		return digits[i];
@@ -109,11 +111,11 @@ public:
 		return *this;
 	}
 	friend PositiveNumber operator-(PositiveNumber left, const PositiveNumber& n) {
-		left.substractFrom(n);
+		left.substract(n);
 		return left;
 	}
 	PositiveNumber& operator-=(const PositiveNumber& n) {
-		this->substractFrom(n);
+		this->substract(n);
 		return *this;
 	}
 	bool operator==(PositiveNumber& n) const {
@@ -183,7 +185,8 @@ public:
 	/**
 	* Adds two positive numbers
 	*/
-	void addTo(PositiveNumber other) {
+
+	virtual void addTo(PositiveNumber other) {
 		std::size_t minSize = std::min(digits.size(), other.digits.size());
 		bool addOne = false;
 		PositiveNumber sum = PositiveNumber();
@@ -206,7 +209,7 @@ public:
 	/**
 	* Adds two positive numbers
 	*/
-	PositiveNumber addTo(PositiveNumber n1, PositiveNumber n2) const{
+	virtual PositiveNumber addTo(PositiveNumber n1, PositiveNumber n2) const{
 		std::size_t minSize = std::min(n1.digits.size(), n2.digits.size());
 		bool addOne = false;
 		PositiveNumber sum = PositiveNumber();
@@ -237,14 +240,32 @@ public:
 	* 
 	* Subsracts two numbers. Returns the module of the result.
 	*/
-	PositiveNumber substractFrom(PositiveNumber other) const {
-		return substractFrom(*this, other);
+	virtual void substract(PositiveNumber other) {
+		std::vector<int>* bigger = (*this > other) ? &this->digits : &other.digits;
+		std::vector<int>* smaller = (*this <= other) ? &this->digits : &other.digits;
+		bool substractOne = false;
+
+		std::size_t minSize = smaller->size();
+		PositiveNumber dif = PositiveNumber();
+		int i = 0;
+		for (; i < minSize; i++) {
+			int v = bigger->at(i) - smaller->at(i) - substractOne;
+			substractOne = v < 0;
+			dif.digits.push_back(v + vectorP * substractOne);
+		}
+		while (i < digits.size()) {
+			int v = bigger->at(i) - smaller->at(i) - substractOne;
+			substractOne = v < 0;
+			dif.digits.push_back(v + vectorP * substractOne);
+			i++;
+		}
+		this->digits = dif.trim().digits;
 	}
 	
 	/**
 	* Shows number as printable string
 	*/
-	std::string toString() {
+	virtual std::string toString() {
 		std::string result = "";
 		if (digits.empty())
 			return "0";
@@ -258,7 +279,7 @@ public:
 	/**
 	* Multiplies number by other using primitive algorithm
 	*/
-	void multiplyBy(PositiveNumber other) {
+	virtual void multiplyBy(PositiveNumber other) {
 		this->digits = simpleMultiplication(other).digits;
 	}
 	
