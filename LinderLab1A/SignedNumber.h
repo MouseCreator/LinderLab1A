@@ -18,7 +18,15 @@ public:
 
 	}
 	void substractFrom(SignedNumber other) {
-
+		if (this->sign == other.sign) {
+			PositiveNumber::substract(other);
+			if (*this < other) {
+				flipSign();
+			}
+		}
+		else {
+			PositiveNumber::addTo(other);
+		}
 	}
 	SignedNumber(std::string str) {
 		if (str[0] == '-') {
@@ -31,5 +39,15 @@ public:
 		std::string s = sign == PLUS ? "" : "-";
 		s += PositiveNumber::toString();
 		return s;
+	}
+	void flipSign() {
+		if (this->sign == MINUS)
+			this->sign = PLUS;
+		else
+			this->sign = MINUS;
+	}
+	void multiplyBy(SignedNumber other) {
+		PositiveNumber::multiplyBy(other);
+		this->sign = (this->sign == other.sign) ? PLUS : MINUS;
 	}
 };

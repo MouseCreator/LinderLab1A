@@ -31,35 +31,11 @@ protected:
 		}
 		return digits;
 	}
-	/**
-	* Substracts max of n1 and n2 from min of n1 and n2
-	*/
-	PositiveNumber substractFrom(PositiveNumber n1, PositiveNumber n2) const {
-		std::vector<int>* bigger = (n1 > n2) ? &n1.digits : &n2.digits;
-		std::vector<int>* smaller = (n1 <= n2) ? &n1.digits : &n2.digits;
-		bool substractOne = false;
-
-		std::size_t minSize = smaller->size();
-		PositiveNumber dif = PositiveNumber();
-		int i = 0;
-		for (; i < minSize; i++) {
-			int v = bigger->at(i) - smaller->at(i) - substractOne;
-			substractOne = v < 0;
-			dif.digits.push_back(v + vectorP * substractOne);
-		}
-		while (i < digits.size()) {
-			int v = bigger->at(i) - smaller->at(i) - substractOne;
-			substractOne = v < 0;
-			dif.digits.push_back(v + vectorP * substractOne);
-			i++;
-		}
-		return dif.trim();
-	}
-
+	
 	/**
 	* Multiplies number by other using primitive algorithm
 	*/
-	PositiveNumber simpleMultiplication(PositiveNumber other) {
+	virtual PositiveNumber simpleMultiplication(PositiveNumber other) const {
 		PositiveNumber product;
 		int offsite = 0;
 		for (int i : digits) {
@@ -80,6 +56,7 @@ protected:
 		}
 		return product;
 	}
+	
 
 public:
 	PositiveNumber() {
@@ -209,32 +186,9 @@ public:
 	/**
 	* Adds two positive numbers
 	*/
-	virtual PositiveNumber addTo(PositiveNumber n1, PositiveNumber n2) const{
-		std::size_t minSize = std::min(n1.digits.size(), n2.digits.size());
-		bool addOne = false;
-		PositiveNumber sum = PositiveNumber();
-		int i = 0;
-		for (; i < minSize; i++) {
-			int v = n1.digits[i] + n2[i] + addOne;
-			addOne = v >= vectorP;
-			sum.digits.push_back(v - vectorP * addOne);
-		}
-		while (i < n1.digits.size()) {
-			int v = n1.digits[i] + addOne;
-			addOne = v >= vectorP;
-			sum.digits.push_back(v - vectorP * addOne);
-			i++;
-		}
-		while (i < n2.digits.size()) {
-			int v = n2[i] + addOne;
-			addOne = v >= vectorP;
-			sum.digits.push_back(v - vectorP * addOne);
-			i++;
-		}
-		if (addOne) {
-			sum.digits.push_back(1);
-		}
-		return sum;
+	virtual PositiveNumber add(PositiveNumber n2) const{
+		n2.addTo(*this);
+		return n2;
 	}
 	/**
 	* 
@@ -261,7 +215,15 @@ public:
 		}
 		this->digits = dif.trim().digits;
 	}
-	
+	/**
+	* Substracts max of n1 and n2 from min of n1 and n2
+	*/
+	PositiveNumber substractFrom(PositiveNumber n2) const {
+		PositiveNumber n = PositiveNumber();
+		n.digits = this->digits;
+		n.substract(n2);
+		return n;
+	}
 	/**
 	* Shows number as printable string
 	*/
@@ -282,5 +244,15 @@ public:
 	virtual void multiplyBy(PositiveNumber other) {
 		this->digits = simpleMultiplication(other).digits;
 	}
+
+	/**
+	* Multiplies number by other using primitive algorithm
+	*/
+	virtual PositiveNumber multiply(PositiveNumber other) const {
+		other.multiplyBy(*this);
+		return other;
+	}
+
+	
 	
 };
