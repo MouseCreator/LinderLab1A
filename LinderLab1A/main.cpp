@@ -37,9 +37,9 @@ void testFiniteNumbers() {
 
 void testDifferentSize() {
 	PositiveNumber a = PositiveNumber("10000");
-	PositiveNumber b = PositiveNumber("1");
-	PositiveNumber c = a - b;
-	PositiveNumber d = b - a;
+	PositiveNumber b = PositiveNumber("0");
+	PositiveNumber c = a * b;
+	PositiveNumber d = b * a;
 	std::cout << c.toString() << std::endl;
 	std::cout << d.toString() << std::endl;
 }

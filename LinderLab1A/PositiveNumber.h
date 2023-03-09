@@ -13,7 +13,7 @@ private:
 
 
 	PositiveNumber trim() {
-		while (digits.back() == 0 && digits.size() != 0) {
+		while (digits.size() != 0 && digits.back() == 0) {
 			this->digits.pop_back();
 		}
 		return (*this);
@@ -54,7 +54,7 @@ protected:
 			product.addTo(term);
 			offsite++;
 		}
-		return product;
+		return product.trim();
 	}
 
 
