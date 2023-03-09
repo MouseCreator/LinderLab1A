@@ -215,8 +215,8 @@ public:
 			substractOne = v < 0;
 			dif.digits.push_back(v + vectorP * substractOne);
 		}
-		while (i < digits.size()) {
-			int v = bigger->at(i) - smaller->at(i) - substractOne;
+		while (i < bigger->size()) {
+			int v = bigger->at(i) - substractOne;
 			substractOne = v < 0;
 			dif.digits.push_back(v + vectorP * substractOne);
 			i++;
