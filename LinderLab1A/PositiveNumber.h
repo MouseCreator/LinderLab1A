@@ -26,12 +26,12 @@ protected:
 		std::vector<int> digits;
 		std::size_t size = str.size();
 		reverse(str.begin(), str.end());
-		for(char ch : str) {
+		for (char ch : str) {
 			digits.push_back(ch - '0');
 		}
 		return digits;
 	}
-	
+
 	/**
 	* Multiplies number by other using primitive algorithm
 	*/
@@ -56,7 +56,7 @@ protected:
 		}
 		return product;
 	}
-	
+
 
 public:
 	PositiveNumber() {
@@ -183,15 +183,16 @@ public:
 			sum.digits.push_back(1);
 		}
 	}
+
 	/**
 	* Adds two positive numbers
 	*/
-	virtual PositiveNumber add(PositiveNumber n2) const{
+	virtual PositiveNumber add(PositiveNumber n2) const {
 		n2.addTo(*this);
 		return n2;
 	}
 	/**
-	* 
+	*
 	* Subsracts two numbers. Returns the module of the result.
 	*/
 	virtual void substract(PositiveNumber other) {
@@ -253,6 +254,6 @@ public:
 		return other;
 	}
 
-	
-	
+
+
 };
