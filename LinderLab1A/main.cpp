@@ -27,9 +27,17 @@ void testSignedNumbers() {
 	
 }
 
+void testDifferentSize() {
+	PositiveNumber a = PositiveNumber("9999");
+	PositiveNumber b = PositiveNumber("1");
+	PositiveNumber c = a + b;
+	PositiveNumber d = b + a;
+	std::cout << c.toString() << std::endl;
+	std::cout << d.toString() << std::endl;
+}
+
 
 
 int main() {
-	testPositiveNumbers();
-	testSignedNumbers();
+	testDifferentSize();
 }

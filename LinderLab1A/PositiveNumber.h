@@ -166,7 +166,6 @@ public:
 	virtual void addTo(PositiveNumber other) {
 		std::size_t minSize = std::min(digits.size(), other.digits.size());
 		bool addOne = false;
-		PositiveNumber sum = PositiveNumber();
 		int i = 0;
 		for (; i < minSize; i++) {
 			int v = digits[i] + other[i] + addOne;
@@ -179,8 +178,17 @@ public:
 			digits.push_back(v - vectorP * addOne);
 			i++;
 		}
-		if (addOne) {
-			sum.digits.push_back(1);
+		while (addOne) {
+			if (i < this->digits.size()) {
+				int v = digits[i] + 1;
+				addOne = v >= vectorP;
+				digits[i] = (v - vectorP * addOne);
+				i++;
+			}
+			else {
+				digits.push_back(1);
+				return;
+			}
 		}
 	}
 	/**
